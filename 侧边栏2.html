@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
+  <script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	<style>
+	ul{
+		list-style: none;
+        padding-left: 0;
+	}
+	#sidebar{
+		width: 35px;
+        position:fixed;
+	    min-height: 100%;
+        background-color: grey;
+        padding-top: 100px;
+        z-index:100;
+	}
+	li{
+        font-size: 10px;
+        font-family: 'Microsoft YaHei';
+		margin-top: 15px;
+		text-align: center;
+
+	}
+	#closebar{
+         width: 35px;
+         bottom: 15px;
+         cursor: pointer;
+         position: absolute;
+         text-align: center;
+	}
+	.nav-content{
+		width: 200px;
+		position: fixed;
+		height: 100%;
+		background-color: #e1e1e1;
+		border: 1px solid #e1e1e1;
+		z-index: 99;
+        opacity: 0;
+	}
+	
+    .nav-close{
+    	position: absolute;
+    	top: 5px;
+    	right: 5px;
+    }
+
+	</style>
+</head>
+<body>
+ <div id="sidebar">
+ <ul>
+ 	<li id="pro"><span class="glyphicon glyphicon-adjust"></span>
+    <div>我</div>
+ 	</li>
+    <li id="asset"><span class="glyphicon glyphicon-usd"></span>
+    <div>资产</div>
+    </li>
+    <li id="brand"><span class="glyphicon glyphicon-heart"></span>
+    <div>品牌</div>
+    </li>    
+    <li id="broadcast"><span class="glyphicon glyphicon-sound-stereo"></span>
+    <div>直播</div>
+    </li>    
+    <li id="foot"><span class="glyphicon glyphicon-eye-open"></span>
+    <div>足迹</div>
+    </li>    
+    <li id="caleder"><span class="glyphicon glyphicon-calendar"></span>
+    <div>日历</div>
+    </li>    
+
+ </ul>
+
+ <div id="closebar">
+ 	  <span class="glyphicon glyphicon-remove-circle"></span>
+ </div>
+ </div>
+
+ <div class="nav-content" id="pro-content">
+
+ 	<div class="nav-close">
+ 	<span class="glyphicon glyphicon-arrow-left" ></span>
+ 	</div>
+ <div >我的</div>
+
+ <div class="nav-close">
+    <span class="glyphicon glyphicon-arrow-left" ></span>
+    </div>
+ <div >资产详情</div>
+
+ <div class="nav-close">
+    <span class="glyphicon glyphicon-arrow-left" ></span>
+    </div>
+ <div >品牌介绍</div>
+ <div class="nav-close">
+    <span class="glyphicon glyphicon-arrow-left" ></span>
+    </div>
+ <div >直播状况</div>
+
+ <div class="nav-close">
+    <span class="glyphicon glyphicon-arrow-left" ></span>
+    </div>
+ <div >足迹搜索</div>
+
+ <div class="nav-close">
+    <span class="glyphicon glyphicon-arrow-left" ></span>
+    </div>
+ <div >日历</div>
+ </div>
+ <script type="text/javascript">
+ 
+ (function(){
+     var Sidebar=function(eId,closeId){
+     	this.state='opend';
+     	this.el=document.getElementById(eId||'sidebar');
+     	this.closeB=document.getElementById(closeId||'closebar');
+
+        var Menubar=function(){
+     	this.el=document.querySelector('#sidebar ul');
+        this.state='allclosed';
+        var self=this;
+        this.el.addEventListener('click',function(e){
+                 e.stopPropagation();
+        })
+        this.menulist=document.querySelectorAll('#sidebar ul>li');
+        this.currentMenu=null;
+        for(var i=0;i<this.menulist.length;i++){
+        	this.menulist[i].addEventListener('click',function(e){
+        		var menuContent=document.getElementById(e.currentTarget.id+'-content');
+        		if(self.state=='allclosed'){
+        			console.log('打开'+menuContent.id);
+        			self.state='hasOpend';
+        			self.currentMenu=menuContent;
+        		}else{
+        			console.log('关闭'+self.currentMenu);
+        			console.log('打开'+menuContent.id);
+        			self.state='hasOpend';
+        			self.currentMenu=menuContent;
+        		}
+
+        	})
+        }     }
+
+     	this.menubar=new Menubar();
+
+     	var self=this;
+     	this.el.addEventListener('click',function(event){
+     		if(event.target!=self.el){
+     			self.triggerSwitch();
+     		}
+     	})
+
+     }
+     Sidebar.prototype.close=function(){console.log('关闭sidebar');
+     this.state='closed';
+
+ }
+     Sidebar.prototype.open=function(){
+     	console.log('打开sidebar');
+     	this.state='opend';
+     }
+     Sidebar.prototype.triggerSwitch=function(){
+     	if(this.state=='opend'){
+     		this.close();
+     	}else{
+     		this.open();
+     	}
+     }
+     var sidebar=new Sidebar();
+     
+
+
+ })()
+
+
+ </script>
+</body>
+</html>
